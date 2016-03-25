@@ -1,0 +1,52 @@
+<!-- build.xml: Ant build file for DEA framework -->
+<!-- 03/25/2016 -->
+
+<project name="DEA" default="dist" basedir=".">
+	<description>
+	Ant build file for the Doane Evolutionary Algorithm (DEA) framework.
+	</description>
+	
+	<!-- global properties, especially directory names -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+	<property name="lib" location="lib"/>
+
+	<target name="clean">
+		<!-- remove build and dist directory trees -->
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+	<target name="compile">
+		<!-- make build directory -->
+		<mkdir dir="${build}"/>
+		
+		<!-- compile the Java source from src into build -->
+		<!-- TODO: if we add any other external jars, add them to the classpath here -->
+		<javac srcdir="${src}" destdir="${build}" classpath="${lib}/colt-1.2.0.jar"
+			includeantruntime="false"/>
+	</target>
+	
+	<target name="dist" depends="compile">
+		<!-- make dist directory -->
+		<mkdir dir="${dist}"/>
+		
+		<!-- package classes into executable JAR -->
+		<jar destfile="${dist}/DEA.jar" basedir="${build}">
+		
+			<!-- incorporate Colt library, and any other external jars, in distributable jar -->
+			<zipgroupfileset dir="${lib}" includes="*.jar" excludes=""/>
+			
+			<!-- TODO: when we create a GUI front end to DEA, make it the main class -->
+			<manifest>
+				<attribute name="Main-Class" value="edu.doane.dugal.samples.dejong01.BinaryDeJong01"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="run">
+		<!-- target to execute the default main class of the system -->
+		<java jar="${dist}/DEA.jar" fork="true"/>
+	</target>
+</project>
