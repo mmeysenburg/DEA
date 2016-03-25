@@ -6,7 +6,7 @@ Doane Evolutionary Algorithm (DEA): a simple, Java-coded framework for solving p
 	* fixed-length integer, and 
 	* fixed-length double. 
 	
-DEA was created at Doane University in the Doane Undergraduate Genetic Algorithms (DUGAL) group, and has been used for several successful undergraduate research projects in EC. The framework has a simple architecture that makes it easily approachable for undergraduate research students, even those early in their university careers. 
+DEA was created at Doane University in the Doane Undergraduate Genetic Algorithms Lab (DUGAL), and has been used for several successful undergraduate research projects in EC. The framework has a simple architecture that makes it easily approachable for undergraduate research students, even those early in their university careers. 
 
 The following text assumes you have basic knowledge of how genetic algoritms work. To read more, see [The Hitch-Hiker's Guide to Evolutionary Computation](http://www.faqs.org/faqs/ai-faq/genetic/part1/).
 
