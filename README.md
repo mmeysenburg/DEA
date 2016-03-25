@@ -21,7 +21,8 @@ If the code should run from the command line, you may also include a main method
 	
 Here is a sample, for solving DeJong's first function. Note that the DEA is configured to maximize fitness values. 
 
-`package edu.doane.dugal.samples.dejong01;
+```
+package edu.doane.dugal.samples.dejong01;
 
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
@@ -130,7 +131,8 @@ public class DeJong01 implements Problem {
         }
     } // main
 
-}`	
+}
+```	
 
 ## Motivation
 
