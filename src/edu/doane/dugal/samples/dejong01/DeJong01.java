@@ -26,10 +26,12 @@ public class DeJong01 implements Problem {
      *
      * @return A DoubleChromosome Individual, with three genes, each in [-5.12,
      * 5.12].
-     *
      */
     @Override
     public Individual createRandomIndividual() {
+        // create a new Individual with three double chromosomes in the
+        // range [-5.12, 5.12]; use 2 decimal points when printing 
+        // fitness of the individual
         return new DoubleChromosome(3, -5.12, 5.12, 2);
     }
 
@@ -68,28 +70,20 @@ public class DeJong01 implements Problem {
         // be seeded based on the system time.
         // PRNG p = PRNG.getInstance();
         // p.setSeed(1209432115);
+        
         // create problem and algorithm
         Problem dj01 = new DeJong01();
-        DEA alg = new DEA(dj01, 100, 100); // 1000 population, 100 generations
+        DEA alg = new DEA(dj01, 1000, 100); // 1000 population, 100 generations
 
         // create and add operators. First, crossover...
         alg.addOperator(new PointCrossover());
-
-        // ... then mutation ...
-        alg.addOperator(new PointMutation());
-
-        // ... then evaluation ...
-        alg.addOperator(new Evaluate(dj01));
-
-        // ... then selection ...
-        alg.addOperator(new ElitistTournamentSelection());
-
-        // ... then statistics
-        StandardStats stats = new StandardStats(2);
+        alg.addOperator(new PointMutation());   // ... then mutation ...
+        alg.addOperator(new Evaluate(dj01));    // ... then evaluation ...
+        alg.addOperator(new ElitistTournamentSelection()); // ... then selection ...
+        StandardStats stats = new StandardStats(2); // ... then statistics
         alg.addOperator(stats);
 
-        // dump run parameters to standard output, so a successful run
-        // could be duplicated
+        // dump run parameters to standard output, so a successful run could be duplicated
         System.out.println(alg.getTableau());
 
         // start the DEA thread
@@ -106,5 +100,4 @@ public class DeJong01 implements Problem {
             System.out.printf("Best ever fitness: %.2f\n", stats.getBestEverIndividual().getFitness());
         }
     } // main
-
 }

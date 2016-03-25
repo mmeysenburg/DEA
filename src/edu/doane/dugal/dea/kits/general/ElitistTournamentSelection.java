@@ -57,7 +57,7 @@ public class ElitistTournamentSelection implements Operator {
     /**
      * Set the tournament size for this operator.
      *
-     * @param k the tournament size to set; must be > 0.
+     * @param k the tournament size to set; must be greater than 0.
      */
     final public void setK(int k) throws IllegalArgumentException {
         if (k <= 0) {

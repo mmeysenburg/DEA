@@ -2,7 +2,8 @@ package edu.doane.dugal.dea;
 
 /**
  * Abstract class representing an individual in an evolutionary algorithm. Make
- * sure extending subclasses implement a deep-copy clone method.
+ * sure extending subclasses implement the copy method, and that it produces
+ * a deep copy of the individual.
  *
  * @author Mark M. Meysenburg
  * @version 12/10/2014

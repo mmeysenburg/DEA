@@ -11,11 +11,13 @@
 	<property name="build" location="build"/>
 	<property name="dist" location="dist"/>
 	<property name="lib" location="lib"/>
+	<property name="docs" location="docs"/>
 
 	<target name="clean">
-		<!-- remove build and dist directory trees -->
+		<!-- remove build, dist, and docs directory trees -->
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
+		<delete dir="${docs}"/>
 	</target>
 
 	<target name="compile">
@@ -43,6 +45,15 @@
 				<attribute name="Main-Class" value="edu.doane.dugal.samples.dejong01.BinaryDeJong01"/>
 			</manifest>
 		</jar>
+	</target>
+	
+	<target name="docs" depends="dist">
+		<!-- make output directory -->
+		<mkdir dir="${docs}"/>
+		
+		<!-- create the javadoc files based on the source code -->
+		<javadoc sourcepath="${src}" classpath="${lib}/colt-1.2.0.jar" 
+			destdir="${docs}"/>
 	</target>
 	
 	<target name="run">

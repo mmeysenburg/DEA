@@ -6,18 +6,20 @@ Doane Evolutionary Algorithm (DEA): a simple, Java-coded framework for solving p
 	* fixed-length integer, and 
 	* fixed-length double. 
 	
-DEA was created at Doane University in the Doane Undergraduate Genetic Algorithms Lab (DUGAL), and has been used for several successful undergraduate research projects in EC. The framework has a simple architecture that makes it easily approachable for undergraduate research students, even those early in their university careers. 
+More options, including program-tree individuals for genetic programming, are planned. 
+	
+The DEA was created at Doane University in the Doane Undergraduate Genetic Algorithms Lab (DUGAL), and has been used for several successful undergraduate research projects in EC. The framework has a simple architecture that makes it easily approachable for undergraduate research students, even those early in their university careers. 
 
 The following text assumes you have basic knowledge of how genetic algoritms work. To read more, see [The Hitch-Hiker's Guide to Evolutionary Computation](http://www.faqs.org/faqs/ai-faq/genetic/part1/).
 
 ## Code Example
 
-First, create an implementation of `edu.doane.dea.Problem` that defines the problem you're trying to solve with the framework. This class has to know how to do two things: 
+First, create an implementation of `edu.doane.dugal.dea.Problem` that defines the problem you're trying to solve with the framework. This class has to know how to do two things: 
 
 	1. Create random potential solutions to the problem, and
 	2. Evaluate a potential solution and determine its fitness
 
-If the code should run from the command line, you may also include a main method in your `Problem` class. 
+If the code should run from the command line, you may also include a main method in your `Problem` class. In the main method, create an instance of your problem, create instances of the EC operators you want to use, add all of that to an instance of the `DEA` class, and then start things off!
 	
 Here is a sample, for solving DeJong's first function. Note that the DEA is configured to maximize fitness values. 
 
@@ -50,10 +52,12 @@ public class DeJong01 implements Problem {
      *
      * @return A DoubleChromosome Individual, with three genes, each in [-5.12,
      * 5.12].
-     *
      */
     @Override
     public Individual createRandomIndividual() {
+        // create a new Individual with three double chromosomes in the
+        // range [-5.12, 5.12]; use 2 decimal points when printing 
+        // fitness of the individual
         return new DoubleChromosome(3, -5.12, 5.12, 2);
     }
 
@@ -92,28 +96,20 @@ public class DeJong01 implements Problem {
         // be seeded based on the system time.
         // PRNG p = PRNG.getInstance();
         // p.setSeed(1209432115);
+        
         // create problem and algorithm
         Problem dj01 = new DeJong01();
-        DEA alg = new DEA(dj01, 100, 100); // 1000 population, 100 generations
+        DEA alg = new DEA(dj01, 1000, 100); // 1000 population, 100 generations
 
         // create and add operators. First, crossover...
         alg.addOperator(new PointCrossover());
-
-        // ... then mutation ...
-        alg.addOperator(new PointMutation());
-
-        // ... then evaluation ...
-        alg.addOperator(new Evaluate(dj01));
-
-        // ... then selection ...
-        alg.addOperator(new ElitistTournamentSelection());
-
-        // ... then statistics
-        StandardStats stats = new StandardStats(2);
+        alg.addOperator(new PointMutation());   // ... then mutation ...
+        alg.addOperator(new Evaluate(dj01));    // ... then evaluation ...
+        alg.addOperator(new ElitistTournamentSelection()); // ... then selection ...
+        StandardStats stats = new StandardStats(2); // ... then statistics
         alg.addOperator(stats);
 
-        // dump run parameters to standard output, so a successful run
-        // could be duplicated
+        // dump run parameters to standard output, so a successful run could be duplicated
         System.out.println(alg.getTableau());
 
         // start the DEA thread
@@ -130,30 +126,37 @@ public class DeJong01 implements Problem {
             System.out.printf("Best ever fitness: %.2f\n", stats.getBestEverIndividual().getFitness());
         }
     } // main
-
 }
 ```	
 
 ## Motivation
 
-TODO: A short description of the motivation behind the creation and maintenance of the project. This should explain why the project exists.
+The DEA framework was created to allow undergraduate research students to solve problems using evolutionary computation (EC) techniques with relative ease. In the simplest case, all one has to do is to create an instance of the `edu.doane.dugal.dea.Problem` class that can create random individuals and evaluate their fitness. The existing framework takes care of the rest. The framework is also easy to extend: new types of individuals and new types of EC operators can be added to the existing class structure, allowing us to solve different types of problems. 
 
 ## Installation
 
-TODO: Provide code examples and explanations of how to get the project.
+To successfully build and run DEA, you first need to download and install
+
+* The [Java Software Development Kit (SDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html), currently at least version 1.8; to compile the source code and run your programs
+* The [Apache Ant](https://ant.apache.org/bindownload.cgi) build tool to control the compilation and packaging of the source code
+* A git client to download the source in the first place
+
+Create a source directory, perhaps called `DEA`, on your machine. Then, from a console session in that directory, execute
+
+```
+git clone https://github.com/mmeysenburg/DEA.git
+```
+
+That should download the DEA source. To build the software, `cd` to the directory created by the `git clone` command, and execute `ant` from the console. Ant will compile all of the source and package everything in to the `dist/DEA.jar` file. 
+
+Execute the default sample program, currently the `DeJong01` class shown above, by executing the command `java -jar dist/DEA.jar`. To execute another sample, or one of your own problems that's been compiled into the jarfile, execute something like `java -cp dist/DEA.jar edu.doane.dugal.samples.DeJong02.DeJong02`.
 
 ## API Reference
 
-TODO: Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+Run the `ant docs` command to locally produce the javadoc documentation for the DEA framework. 
 
-## Tests
+To access the latest version of the documentation follow this link: [http://ist.doane.edu/dugal/docs/index.html].
 
-TODO: Describe and show how to run the tests with code examples.
-
-## Contributors
-
-TODO: Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
-
-## TODO: License
+## License
 
 This code is distributed under the MIT license. See LICENSE.md for the full text of the license.

@@ -9,7 +9,6 @@ import edu.doane.dugal.dea.kits.dchrom.PointMutation;
 import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
 import edu.doane.dugal.dea.kits.general.Evaluate;
 import edu.doane.dugal.dea.kits.general.StandardStats;
-import edu.doane.dugal.samples.dejong01.DeJong01;
 
 /**
  * Sample DEA application: DeJong's second function, using double chromosomes.
@@ -51,8 +50,8 @@ public class DeJong02 implements Problem {
      * Calculate the value of DeJong's second function for a 
      * particular set of values.
      * 
-     * @param x1
-     * @param x2
+     * @param x1 First parameter to the function
+     * @param x2 Second parameter to the function
      * 
      * @return Value of DeJong's second function at (x1, x2).
      */
