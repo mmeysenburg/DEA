@@ -42,7 +42,7 @@
 			
 			<!-- TODO: when we create a GUI front end to DEA, make it the main class -->
 			<manifest>
-				<attribute name="Main-Class" value="edu.doane.dugal.samples.dejong01.BinaryDeJong01"/>
+				<attribute name="Main-Class" value="edu.doane.dugal.samples.dejong01.DeJong01"/>
 			</manifest>
 		</jar>
 	</target>

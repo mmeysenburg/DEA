@@ -1,4 +1,4 @@
-package edu.doane.dugal.samples.dejong01;
+package edu.doane.dugal.samples.functions;
 
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
@@ -15,6 +15,9 @@ import edu.doane.dugal.dea.kits.general.TournamentSelection;
  * Maximize the function
  *
  * -\sum_{i = 1}^{3} x_{i}^{2}, -5.12 \leq x_{i} 5.12
+ * 
+ * (This is a negation of the standard DeJong's first function, since the DEA
+ * framework maximizes instead of minimizes.)
  *
  * @author Mark M. Meysenburg
  * @version 12/30/2014

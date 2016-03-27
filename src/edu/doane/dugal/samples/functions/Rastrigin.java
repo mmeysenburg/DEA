@@ -1,4 +1,4 @@
-package edu.doane.dugal.samples.dejong03;
+package edu.doane.dugal.samples.functions;
 
 import edu.doane.dugal.dea.DEA;
 import edu.doane.dugal.dea.Individual;
@@ -11,50 +11,65 @@ import edu.doane.dugal.dea.kits.general.Evaluate;
 import edu.doane.dugal.dea.kits.general.StandardStats;
 
 /**
- * Sample DEA application: DeJong's third function, using double chromosomes.
- * Maximize the function
- *
- * f_3 = \sum_{i = 1}^5 int\left( x_i \right)
- *
+ * Sample DEA application to optimize Rastrigin's function, 
+ * 
+ * f_7 = -\left( 200 + \sum_{i = 1}^{20} \left( x_i^2 - 10 \cos \left( 2 \pi x_i \right) \right) \right),
+ * where -5.12 \leq x_i \leq 5.12.
+ * 
+ * (This is a negation of the standard Rastrigin function, since the DEA 
+ * framework maximizes instead of minimizes.)
+ * 
  * @author Mark M. Meysenburg
- * @version 03/25/2016
+ * @version 03/27/2016
  */
-public class DeJong03 implements Problem {
+public class Rastrigin implements Problem {
 
     /**
-     * Create a double chromosome with 5 doubles in the range [-5.12, 5.12]
+     * Get a DoubleChromosome Individual representing a potential solution to 
+     * Rastrigin's function. 
      * 
-     * @return Random individual with the proper characteristics
+     * @return A random DoubleChromosome Individual, with 20 genes in the 
+     * range [-5.12, 5.12].
      */
     @Override
     public Individual createRandomIndividual() {
-        return new DoubleChromosome(5, -5.12, 5.12, 2);
+        return new DoubleChromosome(20, -5.12, 5.12, 3);
     }
 
     /**
-     * Evaluate the fitness of an individual.
+     * Evaluate the fitness of a DoubleChromosome Individual representing a 
+     * potential solution to Rastrigin's function. 
      * 
-     * @param ind 5 double chromosome that is a potential solution to the 
-     * problem
+     * @param ind A DoubleChromosome Individual, with 20 genes in the 
+     * range [-5.12, 5.12].
      */
     @Override
     public void evaluateIndividual(Individual ind) {
-        DoubleChromosome d = (DoubleChromosome)ind;
-        double f = (int)d.getGene(0) + (int)d.getGene(1) +
-                (int)d.getGene(2) + (int)d.getGene(3) +
-                (int)d.getGene(4);
+        DoubleChromosome dc = (DoubleChromosome)ind;
+        double f = 200.0, x = 0.0;
         
-        d.setFitness(f);
+        for(int i = 0; i < 20; i++) {
+            x = dc.getGene(i);
+            f += x * x - 10.0 * Math.cos(2.0 * Math.PI * x);
+        }
+        
+        dc.setFitness(-f);
+    }
+    
+    @Override
+    public String toString() {
+        return "Rastrigin, Rastrigin's fucntion with double chromosomes";
     }
     
     /**
-     * Application entry point for console-based run of DeJong03.
+     * Application entry point for console-based run of Rastrigin.
      * 
      * @param args Command-line arguments; ignored by this app. 
      */
     public static void main(String[] args) {
-        Problem dj03 = new DeJong03();
-        DEA alg = new DEA(dj03, 10000, 1000); // 10000 population, 1000 generations
+        // create problem and algorithm
+        Problem ras = new Rastrigin();
+        DEA alg = new DEA(ras, 100000, 1000); // 100000 population, 1000 generations
 
         // create and add operators. First, crossover...
         alg.addOperator(new PointCrossover());
@@ -63,7 +78,7 @@ public class DeJong03 implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(dj03));
+        alg.addOperator(new Evaluate(ras));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());
@@ -90,4 +105,5 @@ public class DeJong03 implements Problem {
             System.out.printf("Best ever fitness: %.3f\n", stats.getBestEverIndividual().getFitness());
         }
     }
+    
 }

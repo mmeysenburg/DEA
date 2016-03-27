@@ -1,17 +1,17 @@
-package edu.doane.dugal.samples.dejong03;
+package edu.doane.dugal.samples.functions;
 
 import edu.doane.dugal.dea.DEA;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
-import edu.doane.dugal.dea.kits.bchrom.BinaryChromosome;
-import edu.doane.dugal.dea.kits.bchrom.PointCrossover;
-import edu.doane.dugal.dea.kits.bchrom.PointMutation;
+import edu.doane.dugal.dea.kits.dchrom.DoubleChromosome;
+import edu.doane.dugal.dea.kits.dchrom.PointCrossover;
+import edu.doane.dugal.dea.kits.dchrom.PointMutation;
 import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
 import edu.doane.dugal.dea.kits.general.Evaluate;
 import edu.doane.dugal.dea.kits.general.StandardStats;
 
 /**
- * Sample DEA application: DeJong's third function, using binary chromosomes.
+ * Sample DEA application: DeJong's third function, using double chromosomes.
  * Maximize the function
  *
  * f_3 = \sum_{i = 1}^5 int\left( x_i \right)
@@ -19,44 +19,46 @@ import edu.doane.dugal.dea.kits.general.StandardStats;
  * @author Mark M. Meysenburg
  * @version 03/25/2016
  */
-public class BinaryDeJong03 implements Problem {
+public class DeJong03 implements Problem {
 
-   /**
-    * Create a new 50-bit chromosome (5, 10-bit genes) representing a 
-    * potential solution to the problem. 
-    * 
-    * @return New individual with the specified characteristics
-    */
+    /**
+     * Create a double chromosome with 5 doubles in the range [-5.12, 5.12]
+     * 
+     * @return Random individual with the proper characteristics
+     */
     @Override
     public Individual createRandomIndividual() {
-        return new BinaryChromosome(50);
+        return new DoubleChromosome(5, -5.12, 5.12, 2);
     }
 
     /**
-     * Evaluate an individual.
+     * Evaluate the fitness of an individual.
      * 
-     * @param ind 50-bit chromosome representing a potential solution to 
-     * the problem
+     * @param ind 5 double chromosome that is a potential solution to the 
+     * problem
      */
     @Override
     public void evaluateIndividual(Individual ind) {
-        BinaryChromosome b = (BinaryChromosome)ind;
-        double x1 = (int)(b.getBitsAsInt(0, 9) / 100.0 - 5.12);
-        double x2 = (int)(b.getBitsAsInt(10, 19) / 100.0 - 5.12);
-        double x3 = (int)(b.getBitsAsInt(20, 29) / 100.0 - 5.12);
-        double x4 = (int)(b.getBitsAsInt(30, 39) / 100.0 - 5.12);
-        double x5 = (int)(b.getBitsAsInt(40, 49) / 100.0 - 5.12);
+        DoubleChromosome d = (DoubleChromosome)ind;
+        double f = (int)d.getGene(0) + (int)d.getGene(1) +
+                (int)d.getGene(2) + (int)d.getGene(3) +
+                (int)d.getGene(4);
         
-        b.setFitness(x1 + x2 + x3 + x4 + x5);
+        d.setFitness(f);
+    }
+    
+    @Override
+    public String toString() {
+        return "DeJong03, DeJong's thrid fucntion with double chromosomes";
     }
     
     /**
-     * Application entry point for the console-based BinaryDeJong03 application.
+     * Application entry point for console-based run of DeJong03.
      * 
-     * @param args Command-line arguments; ignored by this application.
+     * @param args Command-line arguments; ignored by this app. 
      */
     public static void main(String[] args) {
-        Problem dj03 = new BinaryDeJong03();
+        Problem dj03 = new DeJong03();
         DEA alg = new DEA(dj03, 10000, 1000); // 10000 population, 1000 generations
 
         // create and add operators. First, crossover...
@@ -72,7 +74,7 @@ public class BinaryDeJong03 implements Problem {
         alg.addOperator(new ElitistTournamentSelection());
 
         // ... then statistics
-        StandardStats stats = new StandardStats(2);
+        StandardStats stats = new StandardStats(3);
         alg.addOperator(stats);
 
         // dump run parameters to standard output, so a successful run

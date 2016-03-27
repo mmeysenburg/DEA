@@ -41,6 +41,9 @@ import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
  * Maximize the function
  *
  * f_1 = -\sum_{i = 1}^{3} x_{i}^{2}, -5.12 \leq x_{i} 5.12
+ * 
+ * (This is the negation of the standard DeJong's first function, since the 
+ * DEA framework maximizes instead of minimizes.)
  *
  * @author Mark M. Meysenburg
  * @version 12/26/2014
@@ -102,8 +105,8 @@ public class DeJong01 implements Problem {
         DEA alg = new DEA(dj01, 1000, 100); // 1000 population, 100 generations
 
         // create and add operators. First, crossover...
-        alg.addOperator(new PointCrossover());
-        alg.addOperator(new PointMutation());   // ... then mutation ...
+        alg.addOperator(new PointCrossover(0.65));
+        alg.addOperator(new PointMutation(0.02));   // ... then mutation ...
         alg.addOperator(new Evaluate(dj01));    // ... then evaluation ...
         alg.addOperator(new ElitistTournamentSelection()); // ... then selection ...
         StandardStats stats = new StandardStats(2); // ... then statistics
