@@ -93,7 +93,7 @@ public class ElitistTournamentSelection implements Operator {
                 winner = i;
             }
         }
-        newPop.add(winner.copy());
+        newPop.add(Individual.copy(winner));
 
         // fill rest of the new population using k-tournament selection
         for (int i = 1; i < n; i++) {
@@ -110,7 +110,7 @@ public class ElitistTournamentSelection implements Operator {
             } // look at k individuals
 
             // clone winner into spot i
-            newPop.add(winner.copy());
+            newPop.add(Individual.copy(winner));
         } // fill new population
 
         // copy new population back to original one

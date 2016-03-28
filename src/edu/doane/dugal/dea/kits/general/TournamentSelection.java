@@ -68,13 +68,13 @@ public class TournamentSelection implements Operator {
             } // look at k individuals
 
             // clone winner into spot i
-            newPop.add(winner.copy());
+            newPop.add(Individual.copy(winner));
         } // fill new population
 
         // copy new population back to original one
         population.clear();
         for (Individual i : newPop) {
-            population.add(i.copy());
+            population.add(Individual.copy(i));
         }
     }
 

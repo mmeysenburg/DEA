@@ -51,6 +51,25 @@ public class BinaryChromosome extends Individual {
             chromosome.set(i, prng.nextDouble() < 0.5);
         }
     }
+    
+    /**
+     * Copy constructor. Make this BinaryChromosome deep-copy identical to the
+     * parameter. 
+     * 
+     * @param ind BinaryChromosome object to mimic
+     */
+    public BinaryChromosome(BinaryChromosome ind) {
+        super();
+        setFitness(ind.getFitness());
+        length = ind.length;
+        prng = ind.prng;
+        
+        chromosome = new BitSet(length);
+
+        for (int i = 0; i < length; i++) {
+            chromosome.set(i, ind.chromosome.get(i));
+        }
+    }
 
     /**
      * Get the value of a range of bits in the chromosome, as an int.
@@ -120,26 +139,5 @@ public class BinaryChromosome extends Individual {
     @Override
     public String toString() {
         return toString(0, length - 1);
-    }
-
-    /**
-     * Return a deep copy of this BinaryChromosome, as an Individual reference.
-     *
-     * @return Reference to a new BinaryChromosome just like this one.
-     */
-    @Override
-    public Individual copy() {
-        BinaryChromosome b = new BinaryChromosome();
-        b.setFitness(getFitness());
-        b.length = length;
-        b.prng = prng;
-        
-        b.chromosome = new BitSet(b.length);
-
-        for (int i = 0; i < length; i++) {
-            b.chromosome.set(i, chromosome.get(i));
-        }
-
-        return b;
     }
 }

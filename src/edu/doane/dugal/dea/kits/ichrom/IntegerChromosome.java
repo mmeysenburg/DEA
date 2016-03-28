@@ -61,6 +61,22 @@ public class IntegerChromosome extends Individual {
             randomizeGene(i);
         }
     }
+    
+    /**
+     * Copy constructor. Make this IntegerChromosome deep-copy identical to the
+     * parameter.
+     * 
+     * @param ind IntegerChromosome object to mimic
+     */
+    public IntegerChromosome(IntegerChromosome ind) {
+        super();
+        chromosome = new int[ind.chromosome.length];
+        System.arraycopy(ind.chromosome, 0, chromosome, 0, chromosome.length);
+        hi = ind.hi;
+        lo = ind.lo;
+        prng = ind.prng;
+        setFitness(ind.getFitness());
+    }
 
     /**
      * Randomly initialize one of the genes in the chromosome to be in the range
@@ -93,24 +109,5 @@ public class IntegerChromosome extends Individual {
         s.append(chromosome[chromosome.length - 1]).append("]");
 
         return s.toString();
-    }
-
-    /**
-     * Perform a deep-copy clone of this IntegerChromosome object.
-     *
-     * @return A new IntegerChromosome object, just like this one, as an Individual
-     * reference.
-     */
-    @Override
-    public Individual copy() {
-        IntegerChromosome d = new IntegerChromosome();
-        d.chromosome = new int[chromosome.length];
-        System.arraycopy(chromosome, 0, d.chromosome, 0, chromosome.length);
-        d.hi = hi;
-        d.lo = lo;
-        d.prng = prng;
-        d.setFitness(getFitness());
-
-        return d;
     }
 }

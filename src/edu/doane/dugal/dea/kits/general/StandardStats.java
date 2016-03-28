@@ -103,7 +103,7 @@ public class StandardStats implements Operator {
 
             if (f > bestEverFitness) {
                 bestEverFitness = f;
-                bestEverIndividual = i.copy();
+                bestEverIndividual = Individual.copy(i);
             }
 
             avg += f;

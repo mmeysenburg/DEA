@@ -24,7 +24,7 @@ If the code should run from the command line, you may also include a main method
 Here is a sample, for solving DeJong's first function. Note that the DEA is configured to maximize fitness values. 
 
 ```
-package edu.doane.dugal.samples.dejong01;
+package edu.doane.dugal.samples.functions;
 
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
@@ -152,7 +152,7 @@ git clone https://github.com/mmeysenburg/DEA.git
 
 That should download the DEA source. To build the software, `cd` to the directory created by the `git clone` command, and execute `ant` from the console. Ant will compile all of the source and package everything in to the `dist/DEA.jar` file. 
 
-Execute the default sample program, currently the `DeJong01` class shown above, by executing the command `java -jar dist/DEA.jar`. To execute another sample, or one of your own problems that's been compiled into the jarfile, execute something like `java -cp dist/DEA.jar edu.doane.dugal.samples.DeJong02.DeJong02`.
+Execute the default sample program, currently the `DeJong01` class shown above, by executing the command `java -jar dist/DEA.jar`. To execute another sample, or one of your own problems that's been compiled into the jarfile, execute something like `java -cp dist/DEA.jar edu.doane.dugal.samples.functions.DeJong02`.
 
 ## API Reference
 

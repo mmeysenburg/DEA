@@ -73,6 +73,23 @@ public class DoubleChromosome extends Individual {
         }
     }
 
+    /**
+    * Copy constructor. Make this DoubleChromosome object deep-copy identical 
+    * to the parameter.
+    * 
+    * @param other DoubleChromosome to mimic
+    */    
+    public DoubleChromosome(DoubleChromosome other) {
+        super();
+        chromosome = new double[other.chromosome.length];
+        System.arraycopy(other.chromosome, 0, chromosome, 0, chromosome.length);
+        fracDigits = other.fracDigits;
+        hi = other.hi;
+        lo = other.lo;
+        prng = other.prng;
+        setFitness(other.getFitness());
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("[");
@@ -130,25 +147,5 @@ public class DoubleChromosome extends Individual {
         }
 
         chromosome[gene] = value;
-    }
-
-    /**
-     * Perform a deep-copy clone of this DoubleChromosome object.
-     *
-     * @return A new DoubleChromosome object, just like this one, as an Individual
-     * reference.
-     */
-    @Override
-    public Individual copy() {
-        DoubleChromosome d = new DoubleChromosome();
-        d.chromosome = new double[chromosome.length];
-        System.arraycopy(chromosome, 0, d.chromosome, 0, chromosome.length);
-        d.fracDigits = fracDigits;
-        d.hi = hi;
-        d.lo = lo;
-        d.prng = prng;
-        d.setFitness(getFitness());
-
-        return d;
     }
 }
