@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>330</x>
+      <y>10</y>
+      <w>360</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea.kits.bchrom::BinaryChromosome
+--
+-length: int
+~chromosome: BitSet
+-prng: PRNG
+--
++BinaryChromosome(): ctor
++BinaryChromosome(int length): ctor
++BinaryChromosome(BinaryChromosome ind): ctor
++getBitsAsInt(int lo, int hi): int
++getBit(int bit): boolean
++setBit(int bit, boolean value): void
++getLength(): int
++toString(int lo, int hi): String
++toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>330</x>
+      <y>520</y>
+      <w>330</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea.kits.bchrom::PointCrossover
+--
+-prng: PRNG
+-chi: double
+--
++PointCrossover(): ctor
++PointCrossover(double chi): ctor
++getChi(): double
++setChi(double chi): void
++operate(ArrayList&lt;Individual&gt; population): void
++toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>330</x>
+      <y>300</y>
+      <w>320</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea.kits.bchrom::PointMutation
+--
+-prng: PRNG
+-mu: double
+--
++PointMutation(): ctor
++PointMutation(double mu): ctor
++operate(ArrayList&lt;Individual&gt; population): void
++getMu(): double
++setMu(double mu): void
++toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>360</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea::PRNG</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>100</y>
+      <w>130</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>380</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>380</y>
+      <w>130</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>40</y>
+      <w>80</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>60.0;50.0;10.0;50.0;10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>470</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>/edu.doane.dugal.dea::Individual/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>390</y>
+      <w>140</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>650</x>
+      <y>490</y>
+      <w>130</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>440</y>
+      <w>600</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea::PRNG
+--
+-instance = null: PRNG
+-mersenne = null: MersenneTwister
+-seed: int
+-MERSENNE_RANGE = Integer.MAX_VALUE - ((double) Integer.MIN_VALUE) + 1.0: double
+--
+-PRNG(): ctor
++getInstance(): PRNG
++nextInt(): int
++nextInt(int lo, int hi): int
++nextDouble(): double
++nextDouble(double lo, double hi): double
++setSeed(int seed): void
++getSeed(): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>10</y>
+      <w>370</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>edu.doane.dugal.dea::DEA
+--
+-problem: Problem
+-population: ArrayList&lt;Individual&gt;
+-operators: ArrayList&lt;Operator&gt;
+-numGens: int
+--
++DEA(Problem problem, int popSize, int numGens): ctor
++addOperator(Operator op): void
++getTableau(): String
++run(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>270</y>
+      <w>220</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>/edu.doane.dugal.dea::Individual/
+--
+-fitness: double
+--
++Individual(): ctor
++getFitness(): double
++setFitness(double fitness): void
++copy(Individual ind): Individual</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>40</y>
+      <w>250</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+edu.doane.dugal.dea::Problem
+--
++createRandomIndividual(): Individual
++evaluateIndividual(Individual ind): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>270</y>
+      <w>310</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+edu.doane.dugal.dea::Operator
+--
++operate(ArrayList&lt;Individual&gt; population): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>80</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>190</y>
+      <w>230</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>190</y>
+      <w>160</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>140.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
