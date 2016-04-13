@@ -78,7 +78,7 @@ public class Rastrigin implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(ras));
+        alg.addOperator(new Evaluate(ras, 100));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

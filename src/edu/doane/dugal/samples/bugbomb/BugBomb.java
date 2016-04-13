@@ -120,7 +120,7 @@ public class BugBomb implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(prob));
+        alg.addOperator(new Evaluate(prob, 10));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

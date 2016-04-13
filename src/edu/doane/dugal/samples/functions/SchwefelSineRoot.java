@@ -77,7 +77,7 @@ public class SchwefelSineRoot implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(sch));
+        alg.addOperator(new Evaluate(sch, 100));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

@@ -88,7 +88,7 @@ public class ShekelsFoxHoles implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(sfh));
+        alg.addOperator(new Evaluate(sfh, 1000));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

@@ -79,7 +79,7 @@ public class Griewangk implements Problem {
         alg.addOperator(new PointMutation(0.02));
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(gr));
+        alg.addOperator(new Evaluate(gr, 100));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

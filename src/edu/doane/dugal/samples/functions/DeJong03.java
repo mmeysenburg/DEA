@@ -68,7 +68,7 @@ public class DeJong03 implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(dj03));
+        alg.addOperator(new Evaluate(dj03, 100));
 
         // ... then selection ...
         alg.addOperator(new ElitistTournamentSelection());

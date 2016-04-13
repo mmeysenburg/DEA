@@ -93,7 +93,7 @@ public class BinaryDeJong04 implements Problem {
         alg.addOperator(new PointMutation(0.1));
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(dj04));
+        alg.addOperator(new Evaluate(dj04, 100));
 
         // ... then selection ...
         alg.addOperator(new TournamentSelection());

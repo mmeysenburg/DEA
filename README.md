@@ -6,7 +6,7 @@ Doane Evolutionary Algorithm (DEA): a simple, Java-coded framework for solving p
 	* fixed-length integer, and 
 	* fixed-length double. 
 	
-More options, including program-tree individuals for genetic programming, are planned. 
+More options, including program-tree individuals for genetic programming, are planned. The framework automatically divides evaluation over multiple threads, to take advantage of modern processors with multiple cores.
 	
 The DEA was created at Doane University in the Doane Undergraduate Genetic Algorithms Lab (DUGAL), and has been used for several successful undergraduate research projects in EC. The framework has a simple architecture that makes it easily approachable for undergraduate research students, even those early in their university careers. 
 
@@ -107,7 +107,11 @@ public class DeJong01 implements Problem {
         // create and add operators. First, crossover...
         alg.addOperator(new PointCrossover(0.65));
         alg.addOperator(new PointMutation(0.02));   // ... then mutation ...
-        alg.addOperator(new Evaluate(dj01));    // ... then evaluation ...
+        
+        // ... then evaluation, using threshold of 10 individuals to
+        // evaluate in-place instead of with threads ...
+        alg.addOperator(new Evaluate(dj01, 10));    
+        
         alg.addOperator(new ElitistTournamentSelection()); // ... then selection ...
         StandardStats stats = new StandardStats(2); // ... then statistics
         alg.addOperator(stats);
@@ -134,7 +138,7 @@ public class DeJong01 implements Problem {
 
 ## Motivation
 
-The DEA framework was created to allow undergraduate research students to solve problems using evolutionary computation (EC) techniques with relative ease. In the simplest case, all one has to do is to create an instance of the `edu.doane.dugal.dea.Problem` class that can create random individuals and evaluate their fitness. The existing framework takes care of the rest. The framework is also easy to extend: new types of individuals and new types of EC operators can be added to the existing class structure, allowing us to solve different types of problems. 
+The DEA framework was created to allow undergraduate research students to solve problems using evolutionary computation (EC) techniques with relative ease. In the simplest case, all one has to do is to create an instance of the `edu.doane.dugal.dea.Problem` class that can create random individuals and evaluate their fitness. The existing framework takes care of the rest, including built-in multithreading to speed up the evaluation process. The framework is also easy to extend: new types of individuals and new types of EC operators can be added to the existing class structure, allowing us to solve different types of problems. 
 
 ## Installation
 

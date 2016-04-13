@@ -79,6 +79,11 @@ public class DoaneString implements Problem {
 
         return sb.toString();
     }
+    
+    @Override
+    public String toString() {
+        return "DoaneString";
+    }
 
     /**
      * Application entry point for console-based execution.
@@ -103,7 +108,7 @@ public class DoaneString implements Problem {
         alg.addOperator(new PointMutation());
 
         // ... then evaluation ...
-        alg.addOperator(new Evaluate(ds));
+        alg.addOperator(new Evaluate(ds, 10));
 
         // ... then selection ...
         alg.addOperator(new TournamentSelection());
