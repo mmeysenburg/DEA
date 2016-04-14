@@ -2,7 +2,6 @@ package edu.doane.dugal.dea.kits.general;
 
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
-import java.util.ArrayList;
 import java.util.concurrent.RecursiveAction;
 
 /**
@@ -22,7 +21,7 @@ public class EvaluateThread extends RecursiveAction {
     /**
      * Population to evaluate.
      */
-    private ArrayList<Individual> pop;
+    private Individual[] pop;
     
     /** 
      * Index of first individual in the population to evaluate.
@@ -49,7 +48,7 @@ public class EvaluateThread extends RecursiveAction {
      * @param start Index of first individual in the population to evaluate.
      * @param end Index of last individual in the population to evaluate.
      */
-    public EvaluateThread(Problem prob, ArrayList<Individual> pop,
+    public EvaluateThread(Problem prob, Individual[] pop,
             int start, int end) {
         this.prob = prob;
         this.pop = pop;
@@ -68,7 +67,7 @@ public class EvaluateThread extends RecursiveAction {
         // the individuals directly without spawning subthreads
         if((end - start) < threshold) {
             for(int i = start; i <= end; i++) {
-                prob.evaluateIndividual(pop.get(i));
+                prob.evaluateIndividual(pop[i]);
             } // for i
         } else {
             // if threshold hasn't been reached, divide section in half

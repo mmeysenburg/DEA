@@ -2,7 +2,6 @@ package edu.doane.dugal.dea.kits.general;
 
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
-import java.util.ArrayList;
 
 /**
  * Class to do standard population statistics (min, max, average, and best- ever
@@ -81,10 +80,10 @@ public class StandardStats implements Operator {
      * Find min, max, and average fitness for the specified population, and
      * output to standard output.
      *
-     * @param population ArrayList of Individuals to get statistics for.
+     * @param population Array of Individuals to get statistics for.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         double min = Double.POSITIVE_INFINITY;
         double max = Double.NEGATIVE_INFINITY;
         double avg = 0.0;
@@ -109,7 +108,7 @@ public class StandardStats implements Operator {
             avg += f;
         }
 
-        avg /= population.size();
+        avg /= population.length;
 
         System.out.printf(format, generationNumber, min, max, avg, bestEverFitness);
         generationNumber++;

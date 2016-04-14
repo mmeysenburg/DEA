@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.bchrom;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.PRNG;
 import edu.doane.dugal.dea.Operator;
-import java.util.ArrayList;
 import java.util.BitSet;
 
 /**
@@ -78,15 +77,15 @@ public class PointCrossover implements Operator {
      * select a random crossover point, and exchange bits between the
      * individuals after that point.
      *
-     * @param population ArrayList of BinaryChromosome individuals to work on.
+     * @param population Array of BinaryChromosome individuals to work on.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         for (Individual ind : population) {
             // perform crossover?
             if (prng.nextDouble() <= chi) {
                 BitSet dad = ((BinaryChromosome) ind).chromosome;
-                BitSet mom = ((BinaryChromosome) population.get(prng.nextInt(0, population.size() - 1))).chromosome;
+                BitSet mom = ((BinaryChromosome) population[prng.nextInt(0, population.length - 1)]).chromosome;
 
                 int length = ((BinaryChromosome) ind).getLength();
                 int point = prng.nextInt(0, length - 1);

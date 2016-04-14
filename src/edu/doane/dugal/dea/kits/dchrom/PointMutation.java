@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.dchrom;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Class to perform point mutation on a population of DoubleChromosome
@@ -49,10 +48,10 @@ public class PointMutation implements Operator {
     /**
      * Perform the point mutation operation on the specified population.
      *
-     * @param population ArrayList of DoubleChromosome individuals
+     * @param population Array of DoubleChromosome individuals
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         for (Individual ind : population) {
             if (prng.nextDouble() <= getMu()) {
                 int i = prng.nextInt(0, ((DoubleChromosome) ind).getLength() - 1);

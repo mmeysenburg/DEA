@@ -36,7 +36,7 @@ public class BugBomb implements Problem {
     /**
      * Create a random potential solution to the problem.
      *
-     * @return An IntegerChromosome Individual, with six genes, each in [0,
+     * @return An IntegerChromosome Individual, with six genes, each in [1,
      * 100].
      *
      */
@@ -49,7 +49,7 @@ public class BugBomb implements Problem {
      * Evaluate a potential solution to the problem. Determine the individual's
      * fitness, and set the individual's fitness value.
      *
-     * @param ind An IntegerChromosome Individual, with six genes, each in [0,
+     * @param ind An IntegerChromosome Individual, with six genes, each in [1,
      * 100].
      */
     @Override
@@ -76,15 +76,14 @@ public class BugBomb implements Problem {
                     int wy = waspLocs[j][1];
 
                     // if the distance is close enough, that many wasps are
-                    // dead;
-                    // make sure we don't double count
+                    // dead; make sure we don't double count
                     double d = Math.sqrt((bx - wx) * (bx - wx) + (by - wy) * (by - wy));
                     if (d <= 15) {
                         fitness += waspPops[j];
+                        // mark the nest as dead
+                        isDead[j] = true;
                     }
 
-                    // mark the nest as dead
-                    isDead[j] = true;
                 }
             }
         }

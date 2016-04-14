@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.general;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Class representing an elitist tournament selection operator. The operator
@@ -76,12 +75,12 @@ public class ElitistTournamentSelection implements Operator {
      * tournament size k. The best individual in the population is guaranteed to
      * live into the next generation.
      *
-     * @param population ArrayList of Individuals to perform selection on.
+     * @param population Array of Individuals to perform selection on.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
-        int n = population.size();
-        ArrayList<Individual> newPop = new ArrayList<>(n);
+    public void operate(Individual[] population) {
+        int n = population.length;
+        Individual[] newPop = new Individual[n];
 
         // find best individual and make her live into the next generation
         double maxFitness = Double.NEGATIVE_INFINITY;
@@ -93,7 +92,7 @@ public class ElitistTournamentSelection implements Operator {
                 winner = i;
             }
         }
-        newPop.add(Individual.copy(winner));
+        newPop[0] = Individual.copy(winner);
 
         // fill rest of the new population using k-tournament selection
         for (int i = 1; i < n; i++) {
@@ -102,7 +101,7 @@ public class ElitistTournamentSelection implements Operator {
             winner = null;
             // look at k individuals and pick the best one
             for (int j = 0; j < k; j++) {
-                Individual c = population.get(prng.nextInt(0, n - 1));
+                Individual c = population[prng.nextInt(0, n - 1)];
                 if (c.getFitness() > maxFitness) {
                     maxFitness = c.getFitness();
                     winner = c;
@@ -110,13 +109,13 @@ public class ElitistTournamentSelection implements Operator {
             } // look at k individuals
 
             // clone winner into spot i
-            newPop.add(Individual.copy(winner));
+            newPop[i] = Individual.copy(winner);
         } // fill new population
 
         // copy new population back to original one
-        population.clear();
-        for (Individual i : newPop) {
-            population.add(i);
+        for(int i = 0; i < population.length; i++) {
+            population[i] = null;
+            population[i] = newPop[i];
         }
     }
 

@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.general;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Class implementing non-elitist tournament selection.
@@ -46,12 +45,12 @@ public class TournamentSelection implements Operator {
      * Perform a tournament selection operation on the population, with
      * tournament size k.
      *
-     * @param population ArrayList of Individuals to perform selection on.
+     * @param population Array of Individuals to perform selection on.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
-        int n = population.size();
-        ArrayList<Individual> newPop = new ArrayList<>(n);
+    public void operate(Individual[] population) {
+        int n = population.length;
+        Individual[] newPop = new Individual[n];
 
         // fill new population using k-tournament selection
         for (int i = 0; i < n; i++) {
@@ -60,7 +59,7 @@ public class TournamentSelection implements Operator {
             Individual winner = null;
             // look at k individuals and pick the best one
             for (int j = 0; j < k; j++) {
-                Individual c = population.get(prng.nextInt(0, n - 1));
+                Individual c = population[prng.nextInt(0, n - 1)];
                 if (c.getFitness() > maxFitness) {
                     maxFitness = c.getFitness();
                     winner = c;
@@ -68,13 +67,13 @@ public class TournamentSelection implements Operator {
             } // look at k individuals
 
             // clone winner into spot i
-            newPop.add(Individual.copy(winner));
+            newPop[i] = Individual.copy(winner);
         } // fill new population
 
         // copy new population back to original one
-        population.clear();
-        for (Individual i : newPop) {
-            population.add(Individual.copy(i));
+        for(int i = 0; i < population.length; i++) {
+            population[i] = null;
+            population[i] = newPop[i];
         }
     }
 

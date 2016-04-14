@@ -21,7 +21,7 @@ public class DEA extends Thread {
      * Population of Individuals representing potential solutions to the
      * problem.
      */
-    private final ArrayList<Individual> population;
+    private final Individual[] population;
 
     /**
      * List of operators to apply to the population each generation.
@@ -44,9 +44,9 @@ public class DEA extends Thread {
         this.problem = problem;
 
         // create initial random population
-        population = new ArrayList<>(popSize);
-        for (int i = 0; i < popSize; i++) {
-            population.add(this.problem.createRandomIndividual());
+        population = new Individual[popSize];
+        for (int i = 0; i < population.length; i++) {
+            population[i] = this.problem.createRandomIndividual();
         }
 
         this.numGens = numGens;
@@ -82,7 +82,7 @@ public class DEA extends Thread {
         for (Operator op : operators) {
             s.append("\t").append(op.toString()).append("\n");
         }
-        s.append("Population size: ").append(population.size()).append("\n");
+        s.append("Population size: ").append(population.length).append("\n");
         s.append("Generations: ").append(numGens).append("\n");
         PRNG p = PRNG.getInstance();
         s.append("PRNG seed: ").append(p.getSeed()).append("\n");

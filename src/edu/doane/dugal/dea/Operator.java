@@ -1,7 +1,5 @@
 package edu.doane.dugal.dea;
 
-import java.util.ArrayList;
-
 /**
  * Interface representing an operation performed on a population of individuals
  * in the evolutionary algorithm. Samples include crossover, mutation,
@@ -15,8 +13,8 @@ public interface Operator {
     /**
      * Perform this operation on the population.
      *
-     * @param population ArrayList of Individual objects, representing the
+     * @param population Array of Individual objects, representing the
      * population for the evolutionary algorithm.
      */
-    public void operate(ArrayList<Individual> population);
+    public void operate(Individual[] population);
 }

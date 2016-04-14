@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.bchrom;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Class implementing single-point mutation for BinaryChromosome individuals.
@@ -52,10 +51,10 @@ public class PointMutation implements Operator {
      * individual; with probability mu, mutate each one. If mutating, flip one
      * randomly selected bit in the individual.
      *
-     * @param population ArrayList of BinaryChromosome individuals to mutate.
+     * @param population Array of BinaryChromosome individuals to mutate.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         for (Individual ind : population) {
             // do a mutation?
             if (prng.nextDouble() <= mu) {

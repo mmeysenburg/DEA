@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.general;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.Problem;
-import java.util.ArrayList;
 import java.util.concurrent.ForkJoinPool;
 
 /**
@@ -51,10 +50,10 @@ public class Evaluate implements Operator {
      * @param population Population to evaluate.
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         // kick off threads to evaluate the population
         EvaluateThread et = new EvaluateThread(prob, population, 0, 
-            population.size() - 1);
+            population.length - 1);
         
         et.setThreshold(threshold);
         

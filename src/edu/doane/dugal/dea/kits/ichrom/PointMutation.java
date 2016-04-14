@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.ichrom;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Single-point mutation operator for integer chromosomes. The operator iterates
@@ -38,10 +37,10 @@ public class PointMutation implements Operator {
     /**
      * Perform the point mutation operation on the specified population.
      *
-     * @param population ArrayList of IntegerChromosome individuals
+     * @param population Array of IntegerChromosome individuals
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
+    public void operate(Individual[] population) {
         for (Individual ind : population) {
             if (prng.nextDouble() <= getMu()) {
                 int i = prng.nextInt(0, ((IntegerChromosome) ind).chromosome.length - 1);
@@ -73,6 +72,7 @@ public class PointMutation implements Operator {
         this.mu = mu;
     }
 
+    @Override
     public String toString() {
         return "IntegerChromosome PointMutation, mu = " + mu;
     }

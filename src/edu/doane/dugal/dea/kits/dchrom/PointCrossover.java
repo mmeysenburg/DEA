@@ -3,7 +3,6 @@ package edu.doane.dugal.dea.kits.dchrom;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Operator;
 import edu.doane.dugal.dea.PRNG;
-import java.util.ArrayList;
 
 /**
  * Class to perform single point crossover on a population of DoubleChromosome
@@ -48,16 +47,16 @@ public class PointCrossover implements Operator {
     /**
      * Perform the single point crossover operation on the specified population.
      *
-     * @param population ArrayList of DoubleChromosome individuals
+     * @param population Array of DoubleChromosome individuals
      */
     @Override
-    public void operate(ArrayList<Individual> population) {
-        int n = population.size();
+    public void operate(Individual[] population) {
+        int n = population.length;
         for (int i = 0; i < n; i++) {
             // do a crossover?
             if (prng.nextDouble() <= chi) {
-                DoubleChromosome dad = (DoubleChromosome) population.get(i);
-                DoubleChromosome mom = (DoubleChromosome) population.get(prng.nextInt(0, n - 1));
+                DoubleChromosome dad = (DoubleChromosome) population[i];
+                DoubleChromosome mom = (DoubleChromosome) population[prng.nextInt(0, n - 1)];
 
                 // exchange genes
                 int iLength = dad.getLength();
