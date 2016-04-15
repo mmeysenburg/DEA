@@ -18,7 +18,9 @@ import edu.doane.dugal.dea.kits.general.TournamentSelection;
  * 
  * (This is a negation of the standard DeJong's first function, since the DEA
  * framework maximizes instead of minimizes.)
- *
+* 
+ * Maximum is 0, at (0, 0, 0).
+  *
  * @author Mark M. Meysenburg
  * @version 12/30/2014
  */

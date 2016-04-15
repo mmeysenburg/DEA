@@ -16,6 +16,10 @@ import edu.doane.dugal.dea.kits.ichrom.PointMutation;
  * and we have three bug bombs to kill 'em; the GA chooses where to place the
  * bombs for maximum carnage! Each bomb has a radius of 15; every wasp within
  * that radius is killed.
+ * 
+ * Maximum number of wasps killed: 4241, with three bombs at 
+ * [(76, 1), (22, 14), (53, 82)], and [(69, 4), (22, 14), (53, 82)], 
+ * [(92, 3), (74, 86), (35, 10)], and others.
  *
  * @author Mark M. Meysenburg
  * @version 03/06/2004

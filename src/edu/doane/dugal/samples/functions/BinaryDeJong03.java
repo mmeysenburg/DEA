@@ -15,6 +15,8 @@ import edu.doane.dugal.dea.kits.general.StandardStats;
  * Maximize the function
  *
  * f_3 = \sum_{i = 1}^5 int\left( x_i \right)
+ * 
+ * Maximum value is 25.
  *
  * @author Mark M. Meysenburg
  * @version 03/25/2016
@@ -47,7 +49,7 @@ public class BinaryDeJong03 implements Problem {
         double x4 = (int)(b.getBitsAsInt(30, 39) / 100.0 - 5.12);
         double x5 = (int)(b.getBitsAsInt(40, 49) / 100.0 - 5.12);
         
-        b.setFitness(x1 + x2 + x3 + x4 + x5);
+        b.setFitness(DeJong03.deJong03(x1, x2, x3, x4, x5));
     }
     
     @Override

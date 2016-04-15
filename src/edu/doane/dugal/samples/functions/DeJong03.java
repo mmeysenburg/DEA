@@ -15,6 +15,8 @@ import edu.doane.dugal.dea.kits.general.StandardStats;
  * Maximize the function
  *
  * f_3 = \sum_{i = 1}^5 int\left( x_i \right)
+ * 
+ * Maximum value is 25.
  *
  * @author Mark M. Meysenburg
  * @version 03/25/2016
@@ -40,11 +42,27 @@ public class DeJong03 implements Problem {
     @Override
     public void evaluateIndividual(Individual ind) {
         DoubleChromosome d = (DoubleChromosome)ind;
-        double f = (int)d.getGene(0) + (int)d.getGene(1) +
-                (int)d.getGene(2) + (int)d.getGene(3) +
-                (int)d.getGene(4);
         
-        d.setFitness(f);
+        d.setFitness(deJong03(d.getGene(0), 
+                d.getGene(1), 
+                d.getGene(2), 
+                d.getGene(3), 
+                d.getGene(4)));
+    }
+    
+    /**
+     * Compute the value of DeJong's third function. 
+     * 
+     * @param x1
+     * @param x2
+     * @param x3
+     * @param x4
+     * @param x5
+     * 
+     * @return Value of the function at (x1, x2, x3, x4, x5).
+     */
+    public static double deJong03(double x1, double x2, double x3, double x4, double x5) {
+        return (int)x1 + (int)x2 + (int)x3 + (int)x4 + (int)x5;
     }
     
     @Override

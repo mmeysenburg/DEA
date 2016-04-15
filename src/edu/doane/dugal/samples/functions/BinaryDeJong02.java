@@ -22,7 +22,9 @@ import edu.doane.dugal.dea.kits.general.StandardStats;
  *
  * (This is negation of the standard DeJong's second function, since the DEA
  * framework maximizes instead of minimizes.)
- * 
+* 
+ * Max value = 0, at (1, 1).
+  * 
  * @author Mark M. Meysenburg
  * @version 03/25/2016
  */

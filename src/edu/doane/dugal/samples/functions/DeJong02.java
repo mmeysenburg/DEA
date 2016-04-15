@@ -18,6 +18,8 @@ import edu.doane.dugal.dea.kits.general.StandardStats;
  * 
  * (This is negation of the standard DeJong's second function, since the DEA
  * framework maximizes instead of minimizes.)
+ * 
+ * Max value = 0, at (1, 1).
  *
  * @author Mark M. Meysenburg
  * @version 03/25/2016
@@ -76,15 +78,19 @@ public class DeJong02 implements Problem {
     public static void main(String[] args) {
         // code to brute force the max value, 3905.9262268415996
 //        double max = Double.NEGATIVE_INFINITY;
+//        double X1 = Double.POSITIVE_INFINITY, X2 = Double.POSITIVE_INFINITY;
 //        for(double x1 = -2.048; x1 <= 2.048; x1 += 0.0005) {
 //            for(double x2 = -2.048; x2 <= 2.048; x2 += 0.0005) {
-//                double d = DeJong02.deJong02(x1, x2);
+//                double d = -DeJong02.deJong02(x1, x2);
 //                if(d > max) {
 //                    max = d;
+//                    X1 = x1;
+//                    X2 = x2;
+//                    System.out.printf("max: %f, at (%f, %f)\n", max, X1, X2);
 //                }
 //            }
 //        }
-//        System.out.println(max);
+//        
 //        System.exit(0);
         
         // to run with a specific seed, set it before doing anything else;

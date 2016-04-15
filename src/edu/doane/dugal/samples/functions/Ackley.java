@@ -21,6 +21,8 @@ import edu.doane.dugal.dea.kits.general.TournamentSelection;
  * (This is a negation of the standard Ackley function, since the DEA framework
  * maximizes instead of minimizes.)
  * 
+ * Maximum fitness is 0, when all x_i's are 0.
+ * 
  * @author Mark M. Meysenburg
  * @version 03/27/2016
  */
