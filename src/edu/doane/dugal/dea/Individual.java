@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * @author Mark M. Meysenburg
  * @version 12/10/2014
  */
-abstract public class Individual {
+abstract public class Individual implements Comparable {
 
     /**
      * Fitness of this individual; higher is better.
@@ -82,5 +82,10 @@ abstract public class Individual {
         
         // if the reflection didn't work, return a null to satisfy the compiler
         return null;
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        return this.toString().compareTo(o.toString());
     }
 }

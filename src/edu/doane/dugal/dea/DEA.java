@@ -102,5 +102,9 @@ public class DEA extends Thread {
             } // for operators
         } // for gens
     }
+    
+    public Individual[] getPopulation() {
+        return population;
+    }
 
 }

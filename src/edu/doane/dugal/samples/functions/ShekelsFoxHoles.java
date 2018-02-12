@@ -6,9 +6,9 @@ import edu.doane.dugal.dea.Problem;
 import edu.doane.dugal.dea.kits.dchrom.DoubleChromosome;
 import edu.doane.dugal.dea.kits.dchrom.PointCrossover;
 import edu.doane.dugal.dea.kits.dchrom.PointMutation;
+import edu.doane.dugal.dea.kits.general.DiversityThresholdStats;
 import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
 import edu.doane.dugal.dea.kits.general.Evaluate;
-import edu.doane.dugal.dea.kits.general.StandardStats;
 
 /**
  * Sample DEA application to optimize Skekel's Foxholes function, 
@@ -94,7 +94,8 @@ public class ShekelsFoxHoles implements Problem {
         alg.addOperator(new ElitistTournamentSelection());
 
         // ... then statistics
-        StandardStats stats = new StandardStats(3);
+        //StandardStats stats = new StandardStats(3);
+        DiversityThresholdStats stats = new DiversityThresholdStats(3, 0.1, 0.024, sfh);
         alg.addOperator(stats);
 
         // dump run parameters to standard output, so a successful run

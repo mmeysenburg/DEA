@@ -9,7 +9,7 @@ import edu.doane.dugal.dea.PRNG;
  * @author Mark M. Meysenburg
  * @version 12/30/2014
  */
-public class IntegerChromosome extends Individual implements Comparable {
+public class IntegerChromosome extends Individual {
 
     /**
      * Array of integers representing the chromosome for this individual.
@@ -110,9 +110,28 @@ public class IntegerChromosome extends Individual implements Comparable {
 
         return s.toString();
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        return compareTo(o) == 0;
+    }
 
     @Override
     public int compareTo(Object o) {
-        return this.toString().compareTo(o.toString());
+        IntegerChromosome io = (IntegerChromosome)o;
+        
+        if(io.chromosome.length != chromosome.length) {
+            return chromosome.length - io.chromosome.length;
+        }
+        
+        for(int i = 0; i < chromosome.length; i++) {
+            if(chromosome[i] < io.chromosome[i]) {
+                return -1;
+            } else if(chromosome[i] > io.chromosome[i]) {
+                return 1; 
+            }
+        }
+        
+        return 0;
     }
 }

@@ -148,4 +148,30 @@ public class DoubleChromosome extends Individual {
 
         chromosome[gene] = value;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        return compareTo(o) == 0;
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        DoubleChromosome io = (DoubleChromosome)o;
+        
+        if(io.chromosome.length != chromosome.length) {
+            return chromosome.length - io.chromosome.length;
+        }
+        
+        for(int i = 0; i < chromosome.length; i++) {
+            if(chromosome[i] < io.chromosome[i]) {
+                return -1;
+            } else {
+                if(chromosome[i] > io.chromosome[i]) {
+                    return 1; 
+                }
+            }
+        }
+        
+        return 0;
+    }
 }
