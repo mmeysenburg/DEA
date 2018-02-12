@@ -33,6 +33,17 @@ public class PointCrossover implements Operator {
         setChi(0.6);
         prng = PRNG.getInstance();
     }
+    
+    /**
+     * Initializing constructor. Create a new point crossover operator, with
+     * the specified probability of crossover.
+     * 
+     * @param chi Probability of crossover. Must be in [0, 1]. 
+     */
+    public PointCrossover(double chi) {
+        setChi(chi);
+        prng = PRNG.getInstance();
+    }
 
     /**
      * Get the probability of a crossover event.

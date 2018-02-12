@@ -33,6 +33,17 @@ public class PointMutation implements Operator {
         setMu(0.01);
         prng = PRNG.getInstance();
     }
+    
+    /**
+     * Initializing constructor. Create a point mutation operator with specified
+     * probability of mutation. 
+     * 
+     * @param mu Probability of mutation. Must be in [0, 1]. 
+     */
+    public PointMutation(double mu) {
+        setMu(mu);
+        prng = PRNG.getInstance();
+    }
 
     /**
      * Perform the point mutation operation on the specified population.
