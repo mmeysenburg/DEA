@@ -7,7 +7,7 @@ import edu.doane.dugal.dea.kits.general.DiversityThresholdStats;
 import edu.doane.dugal.dea.kits.ichrom.PointCrossover;
 import edu.doane.dugal.dea.kits.ichrom.PointMutation;
 import edu.doane.dugal.dea.kits.general.Evaluate;
-import edu.doane.dugal.dea.kits.general.TournamentSelection;
+import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
 import edu.doane.dugal.dea.kits.ichrom.IntegerChromosome;
 import java.util.Set;
 import java.util.TreeSet;
@@ -24,7 +24,7 @@ public class JJ implements Problem {
 
     @Override
     public Individual createRandomIndividual() {
-        return new IntegerChromosome(LENGTH, -3001, 3000);
+        return new IntegerChromosome(LENGTH, -10000, 10000);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class JJ implements Problem {
         dea.addOperator(new PointCrossover(chi));
         dea.addOperator(new PointMutation(mu));
         dea.addOperator(new Evaluate(jj, 10));
-        dea.addOperator(new TournamentSelection(k));
+        dea.addOperator(new ElitistTournamentSelection(k));
         DiversityThresholdStats stats = 
                 new DiversityThresholdStats(2, threshold, keep, jj);
         dea.addOperator(stats);
