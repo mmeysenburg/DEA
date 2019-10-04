@@ -115,6 +115,15 @@ public class DiversityThresholdStats implements Operator {
         double max = Double.NEGATIVE_INFINITY;
         double avg = 0.0;
         
+        // find best ever individual first
+        for(Individual i : population) {
+            double f = i.getFitness();
+            if(f > bestEverFitness) {
+                bestEverFitness = f;
+                bestEverIndividual = Individual.copy(i);
+            }
+        }
+        
         // diversity: use a set to count distinct individuals
         TreeSet<Individual> set = new TreeSet<>();
         for(Individual i : population) {
@@ -145,7 +154,7 @@ public class DiversityThresholdStats implements Operator {
             diversity = set.size() / ((double)population.length);
         }
 
-        // now evaluate fitness
+        // now evaluate fitness again
         for (Individual i : population) {
 
             double f = i.getFitness();

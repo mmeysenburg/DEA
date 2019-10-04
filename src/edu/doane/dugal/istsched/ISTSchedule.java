@@ -3,6 +3,7 @@ package edu.doane.dugal.istsched;
 import edu.doane.dugal.dea.DEA;
 import edu.doane.dugal.dea.Individual;
 import edu.doane.dugal.dea.Problem;
+import edu.doane.dugal.dea.kits.general.DiversityThresholdStats;
 import edu.doane.dugal.dea.kits.general.ElitistTournamentSelection;
 import edu.doane.dugal.dea.kits.general.Evaluate;
 import edu.doane.dugal.dea.kits.general.StandardStats;
@@ -204,9 +205,8 @@ public class ISTSchedule implements Problem {
         dea.addOperator(new PointMutation(mu));
         dea.addOperator(new Evaluate(ist_sched, 10));
         dea.addOperator(new ElitistTournamentSelection(k));
-//        DiversityThresholdStats stats = 
-//                new DiversityThresholdStats(2, threshold, keep, ist_sched);
-        StandardStats stats = new StandardStats(2);
+        DiversityThresholdStats stats = 
+                new DiversityThresholdStats(2, threshold, keep, ist_sched);
         dea.addOperator(stats);
         System.out.println(dea.getTableau());
         
