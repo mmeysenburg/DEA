@@ -13,175 +13,163 @@ import edu.doane.dugal.dea.kits.ichrom.PointMutation;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
  * @author mark.meysenburg
  */
 public class ISTSchedule implements Problem {
-    
-    private static final int NUMBER_OF_COURSES = 16;
-    private static final int EVEN_FALL_COURSES = 4;
-    private static final int ODD_SPRING_COURSES = 6;
-    private static final int ODD_FALL_COURSES = 4;
-    private static final int EVEN_SPRING_COURSES = 6;
-    private static final int EF_START = 0;
-    private static final int EF_END = EF_START + EVEN_FALL_COURSES;
-    private static final int OS_START = EF_END;
-    private static final int OS_END = OS_START + ODD_SPRING_COURSES;
-    private static final int OF_START = OS_END;
-    private static final int OF_END = OF_START + ODD_FALL_COURSES;
-    private static final int ES_START = OF_END;
-    private static final int ES_END = ES_START + EVEN_SPRING_COURSES;
-    private static final int IST140 = 0, 
-            IST145 = 1, 
-            IST146 = 2, 
-            IST217 = 3,
-            IST246 = 4,
-            IST252 = 5,
-            IST371A = 6,
-            IST371M = 7,
-            IST310 = 8,
-            IST314 = 9,
-            IST315 = 10,
-            IST322 = 11,
-            IST3UU = 12,
-            IST4UU = 13,
-            IST3WW = 14,
-            IST4WW = 15;
-    
-    private Map<Integer, String> courses = new HashMap<>();
+
+    private static final int NUM_TERMS = 10;
+    private static final int COURSES_PER_TERM = 4;
+        
+    private Map<Integer, String> courseNames = new HashMap<>();
+
+    private Map<String, Integer> courseIndices = new HashMap<>();
+
+    private String[] classNames = {
+        "IST 140", 
+        "IST 145",
+        "IST 146",
+        "IST 217",
+        "IST 246", 
+        "IST 252",
+        "IST 322", 
+        "IST 3uu",
+        "IST 3ww", 
+        "IST 371", 
+        "IST 4uu",
+        "IST 4ww"
+    };
     
     public ISTSchedule() {
-        courses.put(IST140, "IST 140");
-        courses.put(IST145, "IST 145");
-        courses.put(IST146, "IST 146");
-        courses.put(IST217, "IST 217");
-        courses.put(IST246, "IST 246");
-        courses.put(IST252, "IST 252");
-        courses.put(IST371A, "IST 371A");
-        courses.put(IST371M, "IST 371M");
-        courses.put(IST310, "IST 310");
-        courses.put(IST314, "IST 314");
-        courses.put(IST315, "IST 315");
-        courses.put(IST322, "IST 322");
-        courses.put(IST3UU, "IST 3UU");
-        courses.put(IST4UU, "IST 4UU");
-        courses.put(IST3WW, "IST 3WW");
-        courses.put(IST4WW, "IST 4WW");
+        for (int i = 0; i < classNames.length; i++) {
+            courseNames.put(i, classNames[i]);
+            courseIndices.put(classNames[i], i);
+        }
     }
 
     @Override
     public Individual createRandomIndividual() {
-        return new IntegerChromosome(
-                EVEN_FALL_COURSES + ODD_SPRING_COURSES + 
-                        ODD_FALL_COURSES + EVEN_SPRING_COURSES, 
-                0, NUMBER_OF_COURSES - 1);
-    }
-    
-    private int ci(int[] schedule, int i0, int i1, int k) {
-        int count = 0;
-        
-        for(int i = i0; i < i1; i++) {
-            if(schedule[i] == k) {
-                count++;
-            }
-        }
-        
-        return count;
+        return new IntegerChromosome(NUM_TERMS * COURSES_PER_TERM, 0, courseNames.size() - 1);
     }
 
+    private boolean cir(int[] sched, int courseIndex, int start, int end) {
+        for(int i = start; i < end; i++) {
+            if(sched[i] == courseIndex) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @Override
     public void evaluateIndividual(Individual ind) {
         double fitness = 0.0;
-        IntegerChromosome icInd = (IntegerChromosome)ind;
-        
-        int[] schedule = new int[EVEN_FALL_COURSES + ODD_SPRING_COURSES + 
-                        ODD_FALL_COURSES + EVEN_SPRING_COURSES];        
-        
-        for(int i = 0; i < schedule.length; i++) {
-            schedule[i] = icInd.getGene(i);
+
+        // place the schedule in an array for future use
+        int[] sched = new int[NUM_TERMS * COURSES_PER_TERM];
+        for (int i = 0; i < sched.length; i++) {
+            sched[i] = ((IntegerChromosome)ind).getGene(i);
         }
-        
-        // ist 140 every fall?
-        if(ci(schedule,EF_START, EF_END, IST140) == 1 &&
-                ci(schedule,OF_START, OF_END, IST140) == 1 && 
-                ci(schedule,OS_START, OS_END, IST140) == 0 &&
-                ci(schedule,ES_START, ES_END, IST140) == 0) {
+
+        // special topics once a year?
+        int x = 0, y = 0, z = courseIndices.get("IST 371");
+        for (int i = 0; i < sched.length / 2; i++) {
+            if (sched[i] == z) {
+                x++;
+            }
+            if(sched[i + sched.length / 2] == z) {
+                y++;
+            }
+        }
+        if (x == 1 && y == 1) {
             fitness += 1.0;
         }
-        
-        // ist 145 every semester?
-        if(ci(schedule,EF_START, EF_END, IST145) == 1 &&
-                ci(schedule,OF_START, OF_END, IST145) == 1 && 
-                ci(schedule,OS_START, OS_END, IST145) == 1 &&
-                ci(schedule,ES_START, ES_END, IST145) == 1) {
+
+        // no duplicates in the same term?
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < COURSES_PER_TERM; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
             fitness += 1.0;
         }
-        
-        // ist 146 every spring?
-        if(ci(schedule,EF_START, EF_END, IST146) == 0 &&
-                ci(schedule,OF_START, OF_END, IST146) == 0 && 
-                ci(schedule,OS_START, OS_END, IST146) == 1 &&
-                ci(schedule,ES_START, ES_END, IST146) == 1) {
+        set.clear();
+        for (int i = COURSES_PER_TERM; i < COURSES_PER_TERM * 2; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
             fitness += 1.0;
         }
-        
-        // ist 246 every other fall?
-        if((ci(schedule,EF_START, EF_END, IST246) == 1 &&
-                ci(schedule,OF_START, OF_END, IST246) == 0 && 
-                ci(schedule,OS_START, OS_END, IST246) == 0 &&
-                ci(schedule,ES_START, ES_END, IST246) == 0) ||
-                (ci(schedule,EF_START, EF_END, IST246) == 0 &&
-                ci(schedule,OF_START, OF_END, IST246) == 1 && 
-                ci(schedule,OS_START, OS_END, IST246) == 0 &&
-                ci(schedule,ES_START, ES_END, IST246) == 0)) {
+        set.clear();
+        for (int i = COURSES_PER_TERM * 2; i < COURSES_PER_TERM * 3; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
             fitness += 1.0;
         }
-        
-        // ist 252 every fall?
-        if(ci(schedule,EF_START, EF_END, IST252) == 1 &&
-                ci(schedule,OF_START, OF_END, IST252) == 1 && 
-                ci(schedule,OS_START, OS_END, IST252) == 0 &&
-                ci(schedule,ES_START, ES_END, IST252) == 0) {
+        set.clear();
+        for (int i = COURSES_PER_TERM * 3; i < COURSES_PER_TERM * 4; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
             fitness += 1.0;
         }
-        
-        // special topics each spring?
-        if(ci(schedule, 0, schedule.length, IST371A) == 1 &&
-                ci(schedule, 0, schedule.length, IST371M) == 1) {
-            if(ci(schedule, OS_START, OS_END, IST371A) == 1 ||
-                    ci(schedule, OS_START, OS_END, IST371M) == 1){
-                if(ci(schedule, ES_START, ES_END, IST371A) == 1 ||
-                        ci(schedule, ES_START, ES_END, IST371M) == 1) {
-                    fitness += 1.0;
+        set.clear();
+        for (int i = COURSES_PER_TERM * 4; i < COURSES_PER_TERM * 5; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
+            fitness += 1.0;
+        }
+        set.clear();
+        for (int i = COURSES_PER_TERM * 5; i < COURSES_PER_TERM * 6; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
+            fitness += 1.0;
+        }
+        set.clear();
+        for (int i = COURSES_PER_TERM * 6; i < COURSES_PER_TERM * 7; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
+            fitness += 1.0;
+        }
+        set.clear();
+        for (int i = COURSES_PER_TERM * 7; i < COURSES_PER_TERM * 8; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
+            fitness += 1.0;
+        }
+        set.clear();
+        for (int i = COURSES_PER_TERM * 8; i < sched.length; i++) {
+            set.add(sched[i]);
+        }
+        if(set.size() == 4) {
+            fitness += 1.0;
+        }
+        set.clear();
+
+        // can start major in autumn or winter 2 each year?
+        x = courseIndices.get("IST 140");
+        y = courseIndices.get("IST 145");
+        z = courseIndices.get("IST 217");
+        if(cir(sched, x, 0, COURSES_PER_TERM) || cir(sched, y, 0, COURSES_PER_TERM) || cir(sched, z, 0, COURSES_PER_TERM)) {
+            if(cir(sched, x, COURSES_PER_TERM * 2, COURSES_PER_TERM * 3) || cir(sched, y, COURSES_PER_TERM * 2, COURSES_PER_TERM * 3) || cir(sched, z, COURSES_PER_TERM * 2, COURSES_PER_TERM * 3)) {
+                if(cir(sched, x, COURSES_PER_TERM * 5, COURSES_PER_TERM * 6) || cir(sched, y, COURSES_PER_TERM * 5, COURSES_PER_TERM * 6) || cir(sched, z, COURSES_PER_TERM * 5, COURSES_PER_TERM * 6)) {
+                    if(cir(sched, x, COURSES_PER_TERM * 7, COURSES_PER_TERM * 8) || cir(sched, y, COURSES_PER_TERM * 7, COURSES_PER_TERM * 8) || cir(sched, z, COURSES_PER_TERM * 7, COURSES_PER_TERM * 8)) {
+                        fitness += 1.0;
+                    }
                 }
             }
-            
         }
-        
-        // ist 322 in alternating fall?
-        if((ci(schedule,EF_START, EF_END, IST322) == 1 &&
-                ci(schedule,OF_START, OF_END, IST322) == 0 && 
-                ci(schedule,OS_START, OS_END, IST322) == 0 &&
-                ci(schedule,ES_START, ES_END, IST322) == 0) ||
-                (ci(schedule,EF_START, EF_END, IST322) == 0 &&
-                ci(schedule,OF_START, OF_END, IST322) == 1 && 
-                ci(schedule,OS_START, OS_END, IST322) == 0 &&
-                ci(schedule,ES_START, ES_END, IST322) == 0)) {
-            fitness += 1.0;
-        }
-        
-        // every course taught? 
-        boolean[] taught = new boolean[NUMBER_OF_COURSES];
-        for(int i = 0; i < schedule.length; i++) {
-            taught[schedule[i]] = true;
-        }
-        for(int i = 0; i < taught.length; i++) {
-            if(taught[i] == false) {
-                fitness -= 10.0;
-            }
-        }
+
+        // 
                 
         ind.setFitness(fitness);
     }
@@ -218,43 +206,62 @@ public class ISTSchedule implements Problem {
             System.err.println("DEA interrupted");
         } finally {
             IntegerChromosome ic = (IntegerChromosome)stats.getBestEverIndividual();
+            int[] sched = new int[NUM_TERMS * COURSES_PER_TERM];
+            for (int i = 0; i < sched.length; i++) {
+                sched[i] = ic.getGene(i);
+            }
 
-            String[] evenFall = new String[EVEN_FALL_COURSES];
-            evenFall[0] = ist_sched.courses.get(ic.getGene(0));
-            evenFall[1] = ist_sched.courses.get(ic.getGene(1));
-            evenFall[2] = ist_sched.courses.get(ic.getGene(2));
-            evenFall[3] = ist_sched.courses.get(ic.getGene(3));
-            Arrays.sort(evenFall);
-            
-            String[] oddSpring = new String[ODD_SPRING_COURSES];
-            oddSpring[0] = ist_sched.courses.get(ic.getGene(4));
-            oddSpring[1] = ist_sched.courses.get(ic.getGene(5));
-            oddSpring[2] = ist_sched.courses.get(ic.getGene(6));
-            oddSpring[3] = ist_sched.courses.get(ic.getGene(7));
-            oddSpring[4] = ist_sched.courses.get(ic.getGene(8));
-            oddSpring[5] = ist_sched.courses.get(ic.getGene(9));
-            Arrays.sort(oddSpring);
-            
-            String[] oddFall = new String[ODD_FALL_COURSES];
-            oddFall[0] = ist_sched.courses.get(ic.getGene(10));
-            oddFall[1] = ist_sched.courses.get(ic.getGene(11));
-            oddFall[2] = ist_sched.courses.get(ic.getGene(12));
-            oddFall[3] = ist_sched.courses.get(ic.getGene(13));
-            Arrays.sort(oddFall);
-            
-            String[] evenSpring = new String[EVEN_SPRING_COURSES];
-            evenSpring[0] = ist_sched.courses.get(ic.getGene(14));
-            evenSpring[1] = ist_sched.courses.get(ic.getGene(15));
-            evenSpring[2] = ist_sched.courses.get(ic.getGene(16));
-            evenSpring[3] = ist_sched.courses.get(ic.getGene(17));
-            evenSpring[4] = ist_sched.courses.get(ic.getGene(18));
-            evenSpring[5] = ist_sched.courses.get(ic.getGene(19));
-            Arrays.sort(evenSpring);
-            
-            System.out.println("Even fall:\t\t" + Arrays.toString(evenFall));
-            System.out.println("Odd spring:\t\t" + Arrays.toString(oddSpring));
-            System.out.println("Odd fall:\t\t" + Arrays.toString(oddFall));
-            System.out.println("Even spring:\t\t" + Arrays.toString(evenSpring));
+            // sort ascending each term
+            Arrays.sort(sched, 0, COURSES_PER_TERM);
+            Arrays.sort(sched, COURSES_PER_TERM, COURSES_PER_TERM * 2);
+            Arrays.sort(sched, COURSES_PER_TERM * 2, COURSES_PER_TERM * 3);
+            Arrays.sort(sched, COURSES_PER_TERM * 3, COURSES_PER_TERM * 4);
+            Arrays.sort(sched, COURSES_PER_TERM * 4, COURSES_PER_TERM * 5);
+            Arrays.sort(sched, COURSES_PER_TERM * 5, COURSES_PER_TERM * 6);
+            Arrays.sort(sched, COURSES_PER_TERM * 6, COURSES_PER_TERM * 7);
+            Arrays.sort(sched, COURSES_PER_TERM * 7, COURSES_PER_TERM * 8);
+            Arrays.sort(sched, COURSES_PER_TERM * 8, sched.length);
+
+            System.out.println("*** EVEN AUTUMN ***");
+            for (int i = 0; i < COURSES_PER_TERM; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** EVEN WINTER 1 ***");
+            for (int i = COURSES_PER_TERM; i < COURSES_PER_TERM * 2; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** ODD WINTER 2 ***");
+            for (int i = COURSES_PER_TERM * 2; i < COURSES_PER_TERM * 3; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** ODD SPRING ***");
+            for (int i = COURSES_PER_TERM * 3; i < COURSES_PER_TERM * 4; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** ODD SUMMER ***");
+            for (int i = COURSES_PER_TERM * 3; i < COURSES_PER_TERM * 4; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** ODD AUTUMN ***");
+            for (int i = COURSES_PER_TERM * 4; i < COURSES_PER_TERM * 5; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** ODD WINTER 1 ***");
+            for (int i = COURSES_PER_TERM * 5; i < COURSES_PER_TERM * 6; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** EVEN WINTER 2 ***");
+            for (int i = COURSES_PER_TERM * 6; i < COURSES_PER_TERM * 7; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** EVEN SPRING ***");
+            for (int i = COURSES_PER_TERM * 7; i < COURSES_PER_TERM * 8; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
+            System.out.println("\n*** EVEN SUMMER ***");
+            for (int i = COURSES_PER_TERM * 8; i < COURSES_PER_TERM * 9; i++) {
+                System.out.println(ist_sched.courseNames.get(sched[i]));
+            }
         }
     }
     
